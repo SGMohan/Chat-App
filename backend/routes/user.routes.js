@@ -14,7 +14,6 @@ UserRouter.post("/signup", signupUser);
 UserRouter.post("/login", loginUser);
 UserRouter.get("/check-auth", protectedRoute, checkAuth);
 UserRouter.put("/update-profile", protectedRoute, updateProfile);
-UserRouter.get("/update-profile", protectedRoute, updateProfile);
 UserRouter.get("/status", getStatus);
 
 module.exports = UserRouter;

@@ -109,7 +109,17 @@ VITE_BACKEND_URL=http://localhost:3000
 
 ## 📸 Screenshots
 
-> *Add your polished app screenshots here to showcase the beautiful dark-themed UI!*
+<div align="center">
+  <img src="screenshots/Login_Page.png" width="45%" alt="Login Page" />
+  <img src="screenshots/Signup_Page.png" width="45%" alt="Signup Page" />
+  <br />
+  <img src="screenshots/Home_Page.png" width="90%" alt="Home Page" />
+  <br />
+  <img src="screenshots/Chat_Page.png" width="90%" alt="Chat Page" />
+  <br />
+  <img src="screenshots/Profile_Page.png" width="45%" alt="Profile Page" />
+</div>
+
 
 ---
 
