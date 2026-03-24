@@ -1,4 +1,4 @@
-import { useContext, useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState, useCallback } from "react";
 import assets, { messagesDummyData } from "../assets/assets";
 import { formatMessageTime } from "../lib/utils";
 import { AuthContext } from "../context/AuthContext";
@@ -8,20 +8,39 @@ import toast from "react-hot-toast";
 const ChatContainer = () => {
 
   const { messages, selectedUser, setSelectedUser, sendMessage,
-    getMessages } = useContext(ChatContext);
+    getMessages, typingUsers, sendTypingStatus } = useContext(ChatContext);
   
   const { authUser, onlineUser } = useContext(AuthContext);
   
   const scrollEnd = useRef();
+  const prevMessagesLength = useRef(0);
 
   const [input, setInput] = useState("");
+
+  // Typing status logic
+  useEffect(() => {
+    if (!input.trim()) {
+      sendTypingStatus(false);
+      return;
+    }
+
+    sendTypingStatus(true);
+    const timeout = setTimeout(() => {
+      sendTypingStatus(false);
+    }, 2000);
+
+    return () => clearTimeout(timeout);
+  }, [input]);
 
   // Handle sending a message
   const handleSendMessage = async (e) => {
     e.preventDefault();
+    if (!input.trim()) return;
+    sendTypingStatus(false); 
     await sendMessage({text: input.trim()});
     setInput("");
   }
+
 
   // Handle send an image
   const handleSendImage = async (e) => {
@@ -43,15 +62,28 @@ const ChatContainer = () => {
 
   useEffect(() => {
     if (selectedUser) {
+      prevMessagesLength.current = 0; // Reset for initial snap on next fetch
       getMessages(selectedUser._id);
     }
   }, [selectedUser]);
 
-  useEffect(() => {
-    if (scrollEnd.current && messages) {
-      scrollEnd.current.scrollIntoView({ behavior: "smooth" });
+  const scrollToBottom = useCallback((behavior = "smooth") => {
+    if (scrollEnd.current) {
+      scrollEnd.current.scrollIntoView({ behavior, block: "end" });
     }
-  }, [messages]);
+  }, []);
+
+  useEffect(() => {
+    // Snap instantly on first load or user switch, smooth scroll for live updates
+    const behavior = messages.length === 0 || prevMessagesLength.current === 0 ? "auto" : "smooth";
+    
+    const timer = setTimeout(() => {
+      scrollToBottom(behavior);
+    }, 50);
+
+    prevMessagesLength.current = messages.length;
+    return () => clearTimeout(timer);
+  }, [messages, typingUsers, scrollToBottom]);
 
   return selectedUser ? (
     <div className="h-full overflow-scroll relative backdrop-blur-lg">
@@ -71,7 +103,7 @@ const ChatContainer = () => {
         <img src={assets.help_icon} alt="" className="max-md:hidden max-w-5" />
       </div>
       {/* ------ chat area ------ */}
-      <div className="flex flex-col h-[calc(100%-120px)] overflow-y-scroll p-3 pb-6">
+      <div className="flex flex-col h-[calc(100%-120px)] overflow-y-scroll p-3 pb-6 scroll-smooth">
         {messages.map((msg, index) => (
           <div
             key={index}
@@ -83,6 +115,7 @@ const ChatContainer = () => {
               <img
                 src={msg.image}
                 alt="message pic"
+                onLoad={() => scrollToBottom("smooth")}
                 className="max-w-[230px] rounded-lg border border-gray-700 overflow-hidden mb-8"
               />
             ) : (
@@ -113,7 +146,18 @@ const ChatContainer = () => {
             </div>
           </div>
         ))}
+        {typingUsers.includes(selectedUser._id) && (
+          <div className="flex items-center gap-2 mb-4">
+             <div className="flex gap-1 items-center">
+                <span className="w-1.5 h-1.5 bg-violet-400 rounded-full animate-bounce"></span>
+                <span className="w-1.5 h-1.5 bg-violet-500 rounded-full animate-bounce [animation-delay:0.2s]"></span>
+                <span className="w-1.5 h-1.5 bg-violet-600 rounded-full animate-bounce [animation-delay:0.4s]"></span>
+             </div>
+             <span className="text-xs text-stone-400 italic font-light">{selectedUser.fullName} is typing...</span>
+          </div>
+        )}
         <div ref={scrollEnd}></div>
+
       </div>
 
       {/* ------ bottom area ------ */}

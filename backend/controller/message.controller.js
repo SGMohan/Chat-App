@@ -1,7 +1,8 @@
 const MessageModel = require("../model/message.model");
 const UserModel = require("../model/user.model");
 const cloudinary = require("cloudinary").v2;
-const { getIO, userSocketMap } = require("../socket");
+const { getIO } = require("../socket");
+
 
 
 // Get all users except the logged in user
@@ -99,14 +100,13 @@ const sendMessage = async (req, res) => {
             image: imageUrl
         });
 
-        // Emit the new message to the receiver's socket if they are online
+        // Emit the new message to the receiver's room (supports multiple devices/tabs)
         const io = getIO();
-        const receiverSocketId = userSocketMap[receiverId];
-        if (receiverSocketId) {
-            io.to(receiverSocketId).emit("newMessage", {
-                newMessage,
-            });
-        }
+        io.to(receiverId).emit("newMessage", newMessage);
+        
+        // Optional: Emit to the sender's room to sync across multiple tabs of the sender
+        // io.to(senderId.toString()).emit("newMessage", newMessage);
+
 
         return res.status(201).json({
             success: true,
