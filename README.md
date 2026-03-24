@@ -114,9 +114,9 @@ VITE_BACKEND_URL=http://localhost:3000
   <img src="screenshots/Signup_Page.png" width="48%" alt="Signup Page" />
   <br />
   <img src="screenshots/Home_Page.png" width="48%" alt="Home Page" />
-  <img src="screenshots/Chat_Page.png" width="48%" alt="Chat Page" />
+  <img src="screenshots/Profile_Page.png" width="48%" alt="Profile Page" />
   <br />
-  <img src="screenshots/Profile_Page.png" width="97%" alt="Profile Page" />
+  <img src="screenshots/Chat_Page.png" width="97%" alt="Chat Page" />
 </div>
 
 
