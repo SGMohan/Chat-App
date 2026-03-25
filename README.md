@@ -140,6 +140,13 @@ VITE_BACKEND_URL=http://localhost:3000
 
 ---
 
+## 🌐 Deployed Project URLs
+
+- **Frontend (Netlify):** [https://quickmsg-app.netlify.app/](https://quickmsg-app.netlify.app/)
+- **Backend (Render):** [https://chat-app-82v1.onrender.com](https://chat-app-82v1.onrender.com)
+
+---
+
 ## 📄 License
 
 Distributed under the MIT License. See `LICENSE` for more information.
