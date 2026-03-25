@@ -10,7 +10,7 @@
 
 ---
 
-## 🚀 Features
+## ✨ Features
 
 - **Instant Messaging**: Real-time 1-to-1 conversations with zero refresh lag.
 - **Smart Online Status**: Accurate real-time tracking of users' online/offline presence across multiple tabs.
