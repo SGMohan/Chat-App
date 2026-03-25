@@ -1,4 +1,4 @@
-# 💬 QuickChat | Real-time Conversations, Reimagined.
+# 🗣️ QuickChat | Real-time Conversations, Reimagined.
 
 ![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
 ![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)
@@ -114,9 +114,9 @@ VITE_BACKEND_URL=http://localhost:3000
   <img src="screenshots/Signup_Page.png" width="48%" alt="Signup Page" />
   <br />
   <img src="screenshots/Home_Page.png" width="48%" alt="Home Page" />
-  <img src="screenshots/Chat_Page.png" width="48%" alt="Chat Page" />
+  <img src="screenshots/Profile_Page.png" width="48%" alt="Profile Page" />
   <br />
-  <img src="screenshots/Profile_Page.png" width="97%" alt="Profile Page" />
+  <img src="screenshots/Chat_Page.png" width="97%" alt="Chat Page" />
 </div>
 
 
